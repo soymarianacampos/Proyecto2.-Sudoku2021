@@ -1,0 +1,417 @@
+program ejercicio1;
+
+uses crt;
+
+var
+    name, e, ej: char;
+    sudoku: array[1..9, 1..9] of integer;
+    guarda: array[1..9, 1..9] of integer;
+    pistas: array[1..9, 1..9] of boolean;
+    status, f, c, v: integer;
+
+procedure ISudoku;
+begin
+textbackground(white);
+textcolor(black);
+	sudoku[1,1] := 9;
+    sudoku[1,2] := 6;
+    sudoku[1,3] := 3;
+    sudoku[1,4] := 1;
+    sudoku[1,5] := 7;
+    sudoku[1,6] := 4;
+    sudoku[1,7] := 2;
+    sudoku[1,8] := 5;
+    sudoku[1,9] := 8;
+
+    sudoku[2,1] := 1;
+    sudoku[2,2] := 7;
+    sudoku[2,3] := 8;
+    sudoku[2,4] := 3;
+    sudoku[2,5] := 2;
+    sudoku[2,6] := 5;
+    sudoku[2,7] := 6;
+    sudoku[2,8] := 4;
+    sudoku[2,9] := 9;
+
+    sudoku[3,1] := 2;
+    sudoku[3,2] := 5;
+    sudoku[3,3] := 4;
+    sudoku[3,4] := 6;
+    sudoku[3,5] := 8;
+    sudoku[3,6] := 9;
+    sudoku[3,7] := 7;
+    sudoku[3,8] := 3;
+    sudoku[3,9] := 1;
+
+    sudoku[4,1] := 8;
+    sudoku[4,2] := 2;
+    sudoku[4,3] := 1;
+    sudoku[4,4] := 4;
+    sudoku[4,5] := 3;
+    sudoku[4,6] := 7;
+    sudoku[4,7] := 5;
+    sudoku[4,8] := 9;
+    sudoku[4,9] := 6;
+
+    sudoku[5,1] := 4;
+    sudoku[5,2] := 9;
+    sudoku[5,3] := 6;
+    sudoku[5,4] := 8;
+    sudoku[5,5] := 5;
+    sudoku[5,6] := 2;
+    sudoku[5,7] := 3;
+    sudoku[5,8] := 1;
+    sudoku[5,9] := 7;
+
+    sudoku[6,1] := 7;
+    sudoku[6,2] := 3;
+    sudoku[6,3] := 5;
+    sudoku[6,4] := 9;
+    sudoku[6,5] := 6;
+    sudoku[6,6] := 1;
+    sudoku[6,7] := 8;
+    sudoku[6,8] := 2;
+    sudoku[6,9] := 4;
+
+    sudoku[7,1] := 5;
+    sudoku[7,2] := 8;
+    sudoku[7,3] := 9;
+    sudoku[7,4] := 7;
+    sudoku[7,5] := 1;
+    sudoku[7,6] := 3;
+    sudoku[7,7] := 4;
+    sudoku[7,8] := 6;
+    sudoku[7,9] := 2;
+
+    sudoku[8,1] := 3;
+    sudoku[8,2] := 1;
+    sudoku[8,3] := 7;
+    sudoku[8,4] := 2;
+    sudoku[8,5] := 4;
+    sudoku[8,6] := 6;
+    sudoku[8,7] := 9;
+    sudoku[8,8] := 8;
+    sudoku[8,9] := 5;
+
+    sudoku[9,1] := 6;
+    sudoku[9,2] := 4;
+    sudoku[9,3] := 2;
+    sudoku[9,4] := 5;
+    sudoku[9,5] := 9;
+    sudoku[9,6] := 8;
+    sudoku[9,7] := 1;
+    sudoku[9,8] := 7;
+    sudoku[9,9] := 3;
+
+end;
+
+procedure PSudoku;
+begin
+textbackground(white);
+textcolor(black);
+	pistas[1,1] :=false;
+    pistas[1,2] :=false;
+    pistas[1,3] := true;
+    pistas[1,4] :=false;
+    pistas[1,5] :=false;
+    pistas[1,6] := true;
+    pistas[1,7] :=false;
+    pistas[1,8] :=false;
+    pistas[1,9] :=false;
+
+    pistas[2,1] :=false;
+    pistas[2,2] := true;
+    pistas[2,3] :=false;
+    pistas[2,4] :=false;
+    pistas[2,5] :=false;
+    pistas[2,6] :=false;
+    pistas[2,7] :=true;
+    pistas[2,8] :=false;
+    pistas[2,9] := true;
+
+    pistas[3,1] := true;
+    pistas[3,2] := false;
+    pistas[3,3] := false;
+    pistas[3,4] := true;
+    pistas[3,5] := false;
+    pistas[3,6] := false;
+    pistas[3,7] := false;
+    pistas[3,8] := false;
+    pistas[3,9] := false;
+
+    pistas[4,1] := false;
+    pistas[4,2] := false;
+    pistas[4,3] := false;
+    pistas[4,4] := false;
+    pistas[4,5] := false;
+    pistas[4,6] := false;
+    pistas[4,7] := true;
+    pistas[4,8] := true;
+    pistas[4,9] := false;
+
+    pistas[5,1] := false;
+    pistas[5,2] := false;
+    pistas[5,3] := false;
+    pistas[5,4] := false;
+    pistas[5,5] := true;
+    pistas[5,6] := false;
+    pistas[5,7] := false;
+    pistas[5,8] := false;
+    pistas[5,9] := false;
+
+    pistas[6,1] := false;
+    pistas[6,2] := false;
+    pistas[6,3] := false;
+    pistas[6,4] := true;
+    pistas[6,5] := false;
+    pistas[6,6] := true;
+    pistas[6,7] := false;
+    pistas[6,8] := false;
+    pistas[6,9] := false;
+
+    pistas[7,1] := true;
+    pistas[7,2] := false;
+    pistas[7,3] := false;
+    pistas[7,4] := false;
+    pistas[7,5] := false;
+    pistas[7,6] := false;
+    pistas[7,7] := false;
+    pistas[7,8] := false;
+    pistas[7,9] := false;
+
+    pistas[8,1] := false;
+    pistas[8,2] := false;
+    pistas[8,3] := false;
+    pistas[8,4] := false;
+    pistas[8,5] := false;
+    pistas[8,6] := false;
+    pistas[8,7] := false;
+    pistas[8,8] := true;
+    pistas[8,9] := false;
+
+    pistas[9,1] := false;
+    pistas[9,2] := false;
+    pistas[9,3] := true;
+    pistas[9,4] := false;
+    pistas[9,5] := false;
+    pistas[9,6] := false;
+    pistas[9,7] := true;
+    pistas[9,8] := false;
+    pistas[9,9] := false;
+end;
+
+
+procedure ImprimirSudoku;
+var
+    i,j:integer;
+begin
+textbackground(white);
+textcolor(black);
+  writeln(' Bienvenido al Sudoku ');
+  for i:=1 to 9 do
+  begin
+      for j := 1 to 9 do
+      begin
+        write(sudoku[i,j]);
+        write(' ');
+        textcolor(black);
+      end;
+        writeln('');
+  end
+end;
+
+procedure ImpSodoku;
+var
+    i,j:integer;
+begin
+textbackground(white);
+textcolor(black);
+  writeln(' Bienvenido a Sodoku ');
+  for i:=1 to 9 do
+  begin
+      for j := 1 to 9 do
+      begin
+        write('X');
+        write(' ');
+        textcolor(black);
+      end;
+        writeln('');
+        textcolor(black);
+  end
+end;
+
+procedure ImpSudokuPis;
+var
+    i,j:integer;
+begin
+textbackground(white);
+textcolor(black);
+  writeln(' Bienvenido a Sodoku ');
+  for i:=1 to 9 do
+  begin
+      for j := 1 to 9 do
+      begin
+        if pistas[i,j] = true then
+            begin
+				textcolor(lightblue);
+                write(sudoku[i,j]);
+                textcolor(black);
+            end
+        else
+        if guarda[i,j]<>0 then
+        begin
+        textcolor(darkgray);
+		 if guarda[i,j]= sudoku[i,j] then
+		 begin
+		 textcolor(darkgray);
+		 end
+		 else
+		 begin
+		 textcolor(darkgray);
+		 end ;
+		 write(guarda[i,j]);
+		 textcolor(black);
+			end
+			else
+            begin
+                write('X');
+            end;
+        write(' ');
+      end;
+        writeln('');
+  end
+end;
+function validacion:integer;
+var
+v:integer;
+begin
+readln(v);
+if v <> 11 then
+begin
+if (v<1) or (v>9) then
+begin
+	repeat
+		begin
+		textcolor(black);
+			v := 0;
+			writeln('introduzca un numero valido');
+			readln(v);
+		end;
+	until (v >=1) and (v<=9);
+end;
+end;
+validacion:=v;
+end;
+function Ganador:boolean;
+var
+i,j:integer;
+resultado:boolean;
+begin
+  resultado:=true;
+  for i:=1 to 9 do
+  begin
+      for j := 1 to 9 do
+      begin
+		if pistas[i,j]= false then
+		begin
+		 if guarda[i,j] <> sudoku[i,j] then
+		 resultado:=false;
+		end;
+       end;
+  end;
+  Ganador:=resultado;
+  end;
+// programa principal
+begin
+	textbackground(white);
+    ClrScr;
+    textbackground(white);
+    textcolor(black);
+    writeln('_______________________________________________________________________________________');
+    writeln('|                          Bienvenido al Sudoku                                        |');
+    writeln('|                             INSTRUCCIONES:                                           |');
+    writeln('|Los numeros colocados por el usuario tendran color gris                               |');
+    writeln('|las pistas no pueden ser reemplazadas o modificadas y tienen color Azul               |');
+    writeln('|Introduzca su nombre para iniciar                                                     |');
+    writeln('|______________________________________________________________________________________|');
+    readln(name);
+    write ('');
+    ISudoku;
+    PSudoku;
+    e := 'a';
+    ej := 'a';
+    status := 0; //status inicial sin ver nada
+    while e <> 'e' do
+    begin
+        ClrScr;
+        textbackground(white);
+		textcolor(black);
+        if status = 0 then
+            begin
+                ImpSodoku;
+            end;
+        if status = 1 then
+            begin
+            textbackground(white);
+			textcolor(black);
+                ImprimirSudoku;
+            end;
+        if status = 2 then
+            begin
+                while ej <> 'x' do
+                    begin
+                        textbackground(white);
+						textcolor(black);
+                        ClrScr;
+                        ImpSudokuPis;
+						if Ganador=true then
+							begin
+							 ej:= 'x';
+							 writeln(' Felicitaciones ', name , ' has ganado el juego ');
+							 end	
+						else
+							begin
+							textbackground(white);
+							textcolor(black);
+							writeln('Introduzca columna o escriba 11 para salir');
+                            c:=validacion();
+                            if (c <> 11) then
+								begin
+									writeln('Introduzca fila o escriba 11 para salir');
+									f:=validacion();
+									if (f <> 11) then
+										begin
+											writeln('Introduzca valor?');
+											v:=validacion();
+										end
+								end;
+                            if ((f <> 11) and (c <> 11) and (v <> 11)) then
+								begin
+									guarda[f,c]:=v;
+								end
+                            else
+								begin
+								    ej := 'x';
+								end;
+							writeln('presione c para continuar jugando');
+                            writeln('presione x para rendise e ir al menu principal');
+                            readln(ej);
+                            end;
+                    end;
+                    ej := 'a';    
+            end;
+        writeln('presione E para salir');
+        writeln('presione R para resolver sodoku');
+        writeln('presione S para ver solucion');
+        readln(e);
+        if e = 's' then
+            begin
+                status := 1; //status para mostrar solucion
+            end;
+        if e = 'r' then
+            begin
+                status := 2; //status para resolver sodoku
+            end
+		end;
+	readkey;
+end.
